@@ -14,21 +14,23 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::group(['prefix' => 'admin'], function () {
-	Route::get('login','LoginController@getLogin');
-    Route::post('login','LoginController@postLogin');
+    Route::get('login', 'LoginController@getLogin');
+    Route::post('login', 'LoginController@postLogin');
 
 
     //list custormer 
-    Route::get('custormer','CustormerController@index');
-    Route::post('custosmer/search','CustormerController@index');
+    Route::get('custormer', 'CustormerController@index');
+    Route::get('custormer/form/{id}', 'CustormerController@form');
+    Route::post('custormer/update/{id}', 'CustormerController@update');
 
-	Route::get('/dashboard ', function () {
-		return view('welcome');
-	});
+    Route::get('/dashboard ', function () {
+        return view('welcome');
+    });
 });
 
 // Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/admin','AdminController@index');
+Route::get('/admin', 'AdminController@index');

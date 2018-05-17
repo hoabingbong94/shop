@@ -22,7 +22,7 @@
     <div class="be-wrapper be-fixed-sidebar">
       <nav class="navbar navbar-default navbar-fixed-top be-top-header">
         <div class="container-fluid">
-          <div class="navbar-header"><a href="index.html" class="navbar-brand"></a></div>
+          <div class="navbar-header"><a href="javascript:void(0)" class="navbar-brand"></a></div>
           <div class="be-right-navbar">
             <ul class="nav navbar-nav navbar-right be-user-nav">
               <li class="dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle">
@@ -37,15 +37,13 @@
         </div>
       </nav>
       <div class="be-left-sidebar">
-        <div class="left-sidebar-wrapper"><a href="#" class="left-sidebar-toggle"></a>
+        <div class="left-sidebar-wrapper"><a href="javascript:void(0)" class="left-sidebar-toggle"></a>
           <div class="left-sidebar-spacer">
             <div class="left-sidebar-scroll">
               <div class="left-sidebar-content">
                 <ul class="sidebar-elements">
                   <li class="divider">Menu Quản lý</li>
-                  <li class="active"><a href="#"><i class="icon mdi mdi-home"></i><span>Dashboard</span></a>
-                  </li>
-                  <li class=""><a href="/admin/custormer"><i class="icon mdi mdi-border-all"></i><span>Quản lý khách hàng</span></a></li>
+                  <li class="active"><a href="/admin/custormer"><i class="icon mdi mdi-border-all"></i><span>Quản lý khách hàng</span></a></li>
                 </ul>
               </div>
             </div>
@@ -57,7 +55,6 @@
             @yield('content')
         </div>
       </div>
-    
     </div>
     <script src="{{ URL::asset('assets/lib/jquery/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js') }}" type="text/javascript"></script>
