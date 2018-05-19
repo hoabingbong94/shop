@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustormerRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Custormer;
 use Illuminate\Support\Facades\DB;
-
+use Validator;
 
 class CustormerController extends Controller
 {
@@ -22,9 +24,9 @@ class CustormerController extends Controller
         } else {
             $status = '';
         }
+
         $custormers = $custormers->orderBy('id', 'desc');
         $custormers = $custormers->paginate(15);
-
         return view("admin.custormer", ["custormers" => $custormers, 'selected' => $status, 'params' => $params]);
     }
 
@@ -39,7 +41,8 @@ class CustormerController extends Controller
         return view("admin.edit", ["custormer" => $custormer]);
     }
 
-    public function update($id, Request $request) {
+    public function update($id, Request $request)
+    {
         $custormer = new Custormer();
         $custormer = $custormer->find($id);
         if (empty($custormer)) {
@@ -49,5 +52,25 @@ class CustormerController extends Controller
         if ($custormer->save()) {
             return redirect('/admin/custormer');
         }
+    }
+
+    public function create(CustormerRequest $request)
+    {
+        $custormer = new Custormer();
+        $name = $request->input('name');
+        $phone = $request->input('phone');
+        $address = $request->input('address');
+        $custormer->name = $name;
+        $custormer->phone = $phone;
+        $custormer->address = $address;
+        $custormer->created_at = Carbon::now();
+        $custormer->status = (int)0;
+        $custormer->status = (int)0;
+        dd($custormer);
+        if ($custormer->save()) {
+            dd('1');
+            return redirect('/');
+        }
+
     }
 }

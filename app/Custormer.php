@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Custormer extends Model
 {
-   protected $table = 'custormers';
+   protected $table = 'customers';
 
    protected $fillable = [
         'name', 'address', 'phone', 'quantily', 'status'

@@ -30,7 +30,9 @@ Route::group(['prefix' => 'admin'], function () {
     });
 });
 
-// Auth::routes();
+ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::get('/admin', 'AdminController@index');
+Route::post('news/create', 'NewsController@create');
+Route::post('news/form', 'NewsController@form');

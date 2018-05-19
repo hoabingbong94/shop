@@ -98,9 +98,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
         <!-- Section 3 -->
         <div class="widget-element widget-snap3">
             <div class="container">
@@ -161,69 +159,9 @@
                                     thuốc hữu hiệu cho các triệu
                                     chứng về khớp ngón tay, chân và tuyến mồ hôi.
                                 </div>
-                                <div class="table-price table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th class="text-center" scope="col">Số hộp</th>
-                                            <th class="text-center" scope="col">Giá hiện tại</th>
-                                            <th class="text-center" scope="col">Giá khuyến mại</th>
-                                            <th class="text-center" scope="col">Tiết kiệm</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td class="text-center">30 ngày</td>
-                                            <td class="text-right">320.000 VNĐ</td>
-                                            <td class="text-right">280.000 VNĐ</td>
-                                            <td class="text-right">40.000 VNĐ</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">60 ngày</td>
-                                            <td class="text-right">640.000 VNĐ</td>
-                                            <td class="text-right">550.000 VNĐ</td>
-                                            <td class="text-right">90.000 VNĐ</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">90 ngày</td>
-                                            <td class="text-right">960.000 VNĐ</td>
-                                            <td class="text-right">800.000 VNĐ</td>
-                                            <td class="text-right">160.000 VNĐ</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="countdown">
-                                    <div class="wrap-days item-countdown">
-                                        <div class="item">
-                                            <div class="number" id="days"></div>
-                                            <div class="text">ngày</div>
-                                        </div>
-                                    </div>
-                                    <div class="wrap-hours item-countdown">
-                                        <div class="item">
-                                            <div class="number" id="hours"></div>
-                                            <div class="text">giờ</div>
-                                        </div>
-                                    </div>
-                                    <div class="wrap-minutes item-countdown">
-                                        <div class="item">
-                                            <div class="number" id="minutes"></div>
-                                            <div class="text">phút</div>
-                                        </div>
-                                    </div>
-                                    <div class="wrap-seconds item-countdown">
-                                        <div class="item">
-                                            <div class="number" id="seconds"></div>
-                                            <div class="text">giây</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <button class="btn btn-advisory" type="button" data-toggle="modal"
-                                            data-target="#advisory">Tôi muốn nhận khuyến mãi
-                                    </button>
-                                </div>
+                                <button id="button-form" class="btn btn-advisory" type="button" data-toggle="modal"
+                                        data-target="#advisory">NHẬN TƯ VẤN MIỄN PHÍ
+                                </button>
                             </div>
                         </div>
                         <div class="col-md-5 col-sm-6">
@@ -234,51 +172,50 @@
                 </div>
             </div>
             <!-- Modal -->
-            <div id="advisory" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-
-                    <!-- Modal content-->
+            <div class="modal fade" id="advisory" tabindex="-1" role="dialog" aria-labelledby="advisory"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Thông tin khách hàng</h4>
+                            <h5 class="modal-title" id="exampleModalLabel">Đăng ký nhận tư vấn miễn phí</h5>
                         </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal">
+                        <form action="/}" method="POST"  class="form-horizontal" role="form">
+                            <div class="modal-body">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Tên</label>
+                                    @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                            <li>{{ $error}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    @endif
+                                    <label class="col-sm-3 control-label"
+                                           for="inputEmail3">Họ và tên</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" placeholder="Họ và tên">
+                                        {!! csrf_field() !!}
+                                        <input type="text" value="{{ old('name') }}" name="name" class="form-control" placeholder="Họ và tên">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Số điện thoại</label>
+                                    <label class="col-sm-3 control-label" for="inputPassword3">Số điện thoại</label>
                                     <div class="col-sm-9">
-                                        <input type="number" class="form-control" placeholder="Số điện thoại">
+                                        <input type="text" value="{{ old('phone') }}" min="10" max="11" name="phone" class="form-control" placeholder="Số điện thoại">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Địa chỉ</label>
+                                    <label class="col-sm-3 control-label" for="inputPassword3">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" placeholder="Địa chỉ">
+                                        <input type="text" value="{{ old('email') }}" name="email" class="form-control"  placeholder="Nhập email">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Số lượng hộp</label>
-                                    <div class="col-sm-9">
-                                        <input type="number" class="form-control" placeholder="Số lượng hộp">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-default btn-info-user">Gửi thông tin
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" id="submit-form" class="btn btn-primary">Đăng ký</button>
+                            </div>
+                        </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -292,26 +229,17 @@
                 <div class="wrap-comments">
                     <div class="comment">
                         <div class="row">
-                            <div class="col-md-3 col-sm-4">
+                            <div class="col-md-3 col-sm-4 col-xs-4">
                                 <div class="img">
                                     <img class="avatar" src="{{ URL::asset('/shop/image/avatar1.jpg') }}" alt="">
                                 </div>
                             </div>
-                            <div class="col-md-9 col-sm-8">
+                            <div class="col-md-9 col-sm-8 col-xs-8">
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="content-comment">
                                             <div class="infor-user">
                                                 <div class="name">Chị Lê Thị Hoa</div>
-                                                <div class="rate-star-mobile">
-                                                    <div class="rate-star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                    </div>
-                                                </div>
                                                 <div class="service-user">Nhân viên văn phòng, Minh Khai - HN</div>
                                                 <div class="border-dotted"></div>
                                                 <div class="content">
@@ -325,7 +253,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 rate-star-desktop">
+                                    <div class="col-md-3">
                                         <div class="rate-star">
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -341,26 +269,17 @@
                     </div>
                     <div class="comment">
                         <div class="row">
-                            <div class="col-md-3 col-sm-4">
+                            <div class="col-md-3 col-sm-4 col-xs-4">
                                 <div class="img">
                                     <img class="avatar" src="{{ URL::asset('/shop/image/avatar1.jpg') }}" alt="">
                                 </div>
                             </div>
-                            <div class="col-md-9 col-sm-8">
+                            <div class="col-md-9 col-sm-8 col-xs-8">
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="content-comment">
                                             <div class="infor-user">
                                                 <div class="name">Chị Lê Thị Hoa</div>
-                                                <div class="rate-star-mobile">
-                                                    <div class="rate-star">
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                                    </div>
-                                                </div>
                                                 <div class="service-user">Nhân viên văn phòng, Minh Khai - HN</div>
                                                 <div class="border-dotted"></div>
                                                 <div class="content">
@@ -374,7 +293,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 hidden-xs">
+                                    <div class="col-md-3">
                                         <div class="rate-star">
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -397,26 +316,36 @@
             <div class="container">
                 <div class="widget-content6">
                     <div class="row">
-                        <div class="col-md-5 col-sm-5 hidden-xs">
+                        <div class="col-md-5 col-sm-5">
                             <img class="img-responsive" src="{{ URL::asset('/shop/image/img-thuoc3.JPG') }}" alt="">
                         </div>
                         <div class="col-md-7 col-sm-7">
                             <h2 class="title">ĐẶT HÀNG NGAY HÔM NAY ĐỂ MUA HÀNG VỚI GIÁ ƯU ĐÃI!</h2>
-                            <div class="title-content hidden-xs">GIẢI QUYẾT VẤN ĐỀ CỦA BẠN</div>
-                            <div class="content hidden-xs">Hãy chia sẻ với nhà thuốc để nhận được tư vấn từ
-                                chuyên gia!
+                            <div class="title-content">GIẢI QUYẾT VẤN ĐỀ CỦA BẠN</div>
+                            <div class="content">Hãy chia sẻ với nhà thuốc để nhận được tư vấn từ chuyên
+                                gia!
                             </div>
-                            <div class="title-content hidden-xs">CẦN SỰ TƯ VẤN CỦA CÁC CHUYÊN GIA</div>
-                            <div class="content hidden-xs">Các chuyên gia tư vấn là các lương y trong nghề lâu năm,
-                                luôn sẵn sàng giải quyết mọi vấn đề cho bạn!
+                            <div class="title-content">CẦN SỰ TƯ VẤN CỦA CÁC CHUYÊN GIA</div>
+                            <div class="content">Các chuyên gia tư vấn là các lương y trong nghề lâu năm, luôn sẵn
+                                sàng giải quyết mọi vấn đề cho bạn!
                             </div>
                             <div class="title-contact">Liên hệ để nắm rõ thông tin tốt nhất</div>
-                            <form action="">
-                                <input type="text" class="input-style-1 input-left" placeholder="Họ và tên">
-                                <input type="text" class="input-style-1 input-right" placeholder="Số điện thoại">
-                                <input type="text" class="input-style-2" placeholder="Nhập email">
+                            <form action="{{url('news/create')}}" method="POST" >
+                                @if (count($errors) > 0)
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{ $error}}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
+                                {!! csrf_field() !!}
+                                <input type="text" value="{{ old('name') }}" name="name" class="input-style-1 input-left" placeholder="Họ và tên">
+                                <input type="text" value="{{ old('phone') }}" min="10" max="11" name="phone" class="input-style-1 input-right" placeholder="Số điện thoại">
+                                <input type="text" value="{{ old('email') }}" name="email" class="input-style-2" placeholder="Nhập email">
                                 <div class="text-center">
-                                    <button class="btn btn-send">Gửi đi</button>
+                                    <button class="btn btn-send">Đăng ký</button>
                                 </div>
                             </form>
                         </div>
@@ -426,63 +355,55 @@
         </div>
     </div>
 </div>
-
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Đăng ký nhận tư vấn miễn phí</h4>
+                <h4 class="modal-title" id="myModalLabel">Đăng ký nhận tư vấn miễn phí 1111111</h4>
             </div>
             <div class="modal-body">
-                <ul style="list-style-type: none;">
-                    <li id="show_err"></li>
-                    <li id="show_err_phone"></li>
-                    {{--<li>Số điện thoại không được bỏ trống</li>--}}
-                </ul>
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Tên</label>
-                        <div class="col-sm-9">
-                            <input type="text" id="name-register" value="{{ old('name') }}" name="name"
-                                   class="form-control" placeholder="Họ và tên">
+                <form action="{{url('news/form')}}" method="POST"  class="form-horizontal" role="form">
+                    <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            {{--<div class="alert alert-danger">--}}
+                                <ul style="list-style-type: none;">
+                                    <li id="show_err"></li>
+                                    <li id="show_err_phone"></li>
+                                    {{--<li>Số điện thoại không được bỏ trống</li>--}}
+                                </ul>
+                                {{--</div>--}}
+                            <label class="col-sm-3 control-label"
+                                   for="inputEmail3">Họ và tên</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="name-register" value="{{ old('name') }}" name="name" class="form-control" placeholder="Họ và tên">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="inputPassword3">Số điện thoại</label>
+                            <div class="col-sm-9">
+                                <input type="text"  id="phone-register"  value="{{ old('phone') }}" min="10" max="11" name="phone" class="form-control" placeholder="Số điện thoại">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="inputPassword3">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text"  id="email-register"  value="{{ old('email') }}" name="email" class="form-control"  placeholder="Nhập email">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Số điện thoại</label>
-                        <div class="col-sm-9">
-                            <input type="text" id="phone-register" value="{{ old('phone') }}" min="10" max="11"
-                                   name="phone" class="form-control" placeholder="Số điện thoại">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Địa chỉ</label>
-                        <div class="col-sm-9">
-                            <input type="text" id="phone-register" value="{{ old('address') }}" min="10" max="11"
-                                   name="phone" class="form-control" placeholder="Số điện thoại">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-default btn-info-user">Gửi thông tin
-                            </button>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" id="submit-ajax-form" class="btn btn-primary">Đăng ký</button>
                     </div>
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 <script type="text/javascript" src="{{ URL::asset('/shop/assets/bootstrap/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('/shop/js/main.js') }}"></script>
 </body>
-
 </html>
-
 <script type="text/javascript">
     function Set_Cookie(name, value, expires, path, domain, secure) {
         var today = new Date();
@@ -539,26 +460,28 @@
         }
     });
 
-    function validMail(mail) {
+    function validMail(mail)
+    {
         return /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/.test(mail);
     }
 
-    function validPhone(phone) {
+    function validPhone(phone)
+    {
         return /(09|01[2|6|8|9])+([0-9]{8})\b/.test(phone);
     }
 
 
     $(document).ready(function () {
         $("#submit-ajax-form").click(function () {
-            var email = $("#email-register").val();
-            var name = $("#name-register").val();
-            var phone = $("#phone-register").val();
+            var email   = $("#email-register").val();
+            var name   = $("#name-register").val();
+            var phone  = $("#phone-register").val();
             var _token = $("#token").val();
 
-            if (!validMail(email)) {
+            if(!validMail(email)) {
                 $("#show_err").addClass('alert alert-danger');
                 $("#show_err").show().html('Email không hợp lệ');
-            } else if (!validPhone(phone)) {
+            }else if(!validPhone(phone)){
                 $("#show_err_phone").addClass('alert alert-danger');
                 $("#show_err_phone").show().html('Số điện thoại không hợp lệ');
             } else {
