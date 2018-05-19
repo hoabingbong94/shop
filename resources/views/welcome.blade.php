@@ -240,7 +240,6 @@
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Thông tin khách hàng</h4>
                         </div>
                         <div class="modal-body">
@@ -411,12 +410,22 @@
                                 luôn sẵn sàng giải quyết mọi vấn đề cho bạn!
                             </div>
                             <div class="title-contact">Liên hệ để nắm rõ thông tin tốt nhất</div>
-                            <form action="">
-                                <input type="text" class="input-style-1 input-left" placeholder="Họ và tên">
-                                <input type="text" class="input-style-1 input-right" placeholder="Số điện thoại">
-                                <input type="text" class="input-style-2" placeholder="Nhập email">
+                            <form action="{{url('news/create')}}" method="POST" >
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                                {!! csrf_field() !!}
+                                <input type="text" value="{{ old('name') }}" name="name" class="input-style-1 input-left" placeholder="Họ và tên">
+                                <input type="text" value="{{ old('phone') }}" min="10" max="11" name="phone" class="input-style-1 input-right" placeholder="Số điện thoại">
+                                <input type="text" value="{{ old('email') }}" name="email" class="input-style-2" placeholder="Nhập email">
                                 <div class="text-center">
-                                    <button class="btn btn-send">Gửi đi</button>
+                                    <button class="btn btn-send">Đăng ký</button>
                                 </div>
                             </form>
                         </div>
@@ -427,22 +436,18 @@
     </div>
 </div>
 
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModal" class="modal fade" role="dialog"  data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Đăng ký nhận tư vấn miễn phí</h4>
             </div>
             <div class="modal-body">
-                <ul style="list-style-type: none;">
-                    <li id="show_err"></li>
-                    <li id="show_err_phone"></li>
-                    {{--<li>Số điện thoại không được bỏ trống</li>--}}
-                </ul>
+                <div class="form-regis">
+                <div id="result-error"></div>
                 <form class="form-horizontal">
+                    <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tên</label>
                         <div class="col-sm-9">
@@ -460,18 +465,21 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Địa chỉ</label>
                         <div class="col-sm-9">
-                            <input type="text" id="phone-register" value="{{ old('address') }}" min="10" max="11"
-                                   name="phone" class="form-control" placeholder="Số điện thoại">
+                            <input type="text" id="email-register" value="{{ old('email') }}" min="10" max="11"
+                                   name="email" class="form-control" placeholder="Email">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="text-center">
-                            <button type="submit" class="btn btn-default btn-info-user">Gửi thông tin
-                            </button>
+                            <button type="button" id="submit-ajax-form" class="btn btn-default btn-info-user">Gửi thông tin</button>
                         </div>
                     </div>
                 </form>
+                </div>
+                <div class="status" style="display: none;   color: green;">
+                    <span class="glyphicon glyphicon-heart"></span>Bạn đã đăng ký nhận tin thành công<span class="glyphicon glyphicon-heart"></span>
+                </div>
             </div>
         </div>
 
@@ -522,8 +530,8 @@
             return false;
         }
         else {
-            Set_Cookie('cookie_popup', 'PopUnder', 0.1, '/', '', '');
-            $('#myModal').modal('show')
+            // Set_Cookie('cookie_popup', 'PopUnder', 0.1, '/', '', '');
+            $('#myModal').modal('show', {backdrop: 'static', keyboard: false})
             return false;
         }
     }
@@ -539,15 +547,6 @@
         }
     });
 
-    function validMail(mail) {
-        return /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/.test(mail);
-    }
-
-    function validPhone(phone) {
-        return /(09|01[2|6|8|9])+([0-9]{8})\b/.test(phone);
-    }
-
-
     $(document).ready(function () {
         $("#submit-ajax-form").click(function () {
             var email = $("#email-register").val();
@@ -555,39 +554,60 @@
             var phone = $("#phone-register").val();
             var _token = $("#token").val();
 
-            if (!validMail(email)) {
-                $("#show_err").addClass('alert alert-danger');
-                $("#show_err").show().html('Email không hợp lệ');
-            } else if (!validPhone(phone)) {
-                $("#show_err_phone").addClass('alert alert-danger');
-                $("#show_err_phone").show().html('Số điện thoại không hợp lệ');
-            } else {
-                $("#show_err").removeClass('alert alert-danger');
-                $("#show_err_phone").removeClass('alert alert-danger');
-                $("#show_err").hide();
-                $("#show_err_phone").hide();
-                $.ajax({
-                    url: 'news/form',
-                    type: 'post',
-                    dataType: "json",
-                    data: {
-                        "_token": _token,
-                        "name": name,
-                        "email": email,
-                        "phone": phone
-                    },
-                    success: function (data) {
-                        alert('aaaaaaaaaa');
-                        if (data == 'ok') {
-                            $("#txtMail").val("");
-                            alert('Gửi email thành công!');
-                        } else {
-                            alert('Có lỗi xảy ra! Vui lòng thử lại.');
-                        }
+            $.ajax({
+                url: 'news/form',
+                type: 'post',
+                dataType: "json",
+                data: {
+                    "_token": _token,
+                    "name": name,
+                    "email": email,
+                    "phone": phone
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.status) {
+                        $('.form-regis').hide();
+                        $('.status').show();
+                        setTimeout(function () {
+                            $('#myModal').modal('hide');
+                            Set_Cookie('cookie_popup', 'PopUnder', 0.1, '/', '', '');
+                        }, 3000);
                     }
-                });
-            }
+                },
+                error: function (data) {
+                    var response = JSON.parse(data.responseText);
+                    // console.log(response.name.length);
+                    if (response.email.length > 0 || response.name.length > 0 || response.phone.length > 0) {
+                        var email_res = response.email;
+                        var name_res = response.name;
+                        var phone_res = response.phone;
+                        var html = "";
+                        html += "<div class='alert alert-danger'>";
+                        html += "<ul>";
+                        //error name
+                        for (let i = 0; i < email_res.length; ++i) {
+                            html += "<li>" + email_res[i] + "</li>";
+                        }
+                        //error email
+                        for (let k = 0; k < name_res.length; ++k) {
+                            html += "<li>" + name_res[k] + "</li>";
+                        }
+                        //error phone
+                        for (let j = 0; j < phone_res.length; ++j) {
+                            html += "<li>" + phone_res[j] + "</li>";
+                        }
+
+                        html += "</ul>";
+                        html += "</div>";
+                        $('#result-error').html(html);
+                    }
+
+                }
+            });
+            return false;
         });
     });
+
 
 </script>

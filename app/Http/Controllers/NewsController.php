@@ -28,7 +28,7 @@ class NewsController extends Controller
 
     }
 
-    public function form()
+    public function form(NewsRequest $request)
     {
         if (Request::ajax()) {
             $email = Request::get('email');
@@ -41,12 +41,11 @@ class NewsController extends Controller
                 'status' => 0,
                 'created_at' => date('Y-m-d H:i:s')
             );
-
             $add = DB::table('news')->insert($data);
             if ($add) {
-                return "ok";
+                return response()->json(['status' => true]);
             }
-            return "err";
+            return response()->json(['status' => false, 'data' => $request]);
         }
     }
 }
