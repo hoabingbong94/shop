@@ -25,9 +25,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('custormer/form/{id}', 'CustormerController@form');
     Route::post('custormer/update/{id}', 'CustormerController@update');
 
-    Route::get('/dashboard ', function () {
-        return view('welcome');
-    });
+//    list news
+    Route::get('news', 'NewsController@index');
+
+
 });
 
  Auth::routes();

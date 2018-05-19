@@ -10,6 +10,23 @@ use Request;
 
 class NewsController extends Controller
 {
+    public function index() {
+        $news = new News();
+        $params = request()->input();
+
+        if (!empty($params['search'])) {
+            $news = $news->search($params);
+        }
+        if (!empty($params['status'])) {
+            $status = $params['status'];
+        } else {
+            $status = '';
+        }
+
+        $news = $news->orderBy('id', 'desc');
+        $news = $news->paginate(15);
+        return view("admin.new", ["news" => $news, 'selected' => $status, 'params' => $params]);
+    }
 
     public function create(NewsRequest $request)
     {

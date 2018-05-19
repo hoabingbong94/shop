@@ -28,8 +28,14 @@
               <li class="dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle">
                 <img src="{{ URL::asset('assets/img/avatar.png') }}" alt="Avatar"><span class="user-name">Admin</span></a>
                 <ul role="menu" class="dropdown-menu">
-                  <li><a href="#"><span class="icon mdi mdi-settings"></span> Settings</a></li>
-                  <li><a href="#"><span class="icon mdi mdi-power"></span> Thoát</a></li>
+                    @if (Auth::guest())
+                    @else
+                        <li><a href="{{ url('/logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><span class="icon mdi mdi-power"></span> Thoát</a></li>
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    @endif
                 </ul>
               </li>
             </ul>

@@ -410,29 +410,42 @@
                                 luôn sẵn sàng giải quyết mọi vấn đề cho bạn!
                             </div>
                             <div class="title-contact">Liên hệ để nắm rõ thông tin tốt nhất</div>
-                            <form action="{{url('news/create')}}" method="POST" >
-                                @if (count($errors) > 0)
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error}}</li>
-                                            @endforeach
-                                        </ul>
+                            <div class="form-regis-footer">
+                            <div id="result-error-footer"></div>
+                                <form  class="form-horizontal">
+                                    <input type="hidden" id="token-footer" name="_token" value="{{ csrf_token() }}">
+                                    <input type="text" value="{{ old('name') }}" id="name-footer" name="name" class="input-style-1 input-left" placeholder="Họ và tên">
+                                    <input type="text" value="{{ old('phone') }}" id="phone-footer" min="10" max="11" name="phone" class="input-style-1 input-right" placeholder="Số điện thoại">
+                                    <input type="text" value="{{ old('email') }}" id="email-footer" name="email" class="input-style-2" placeholder="Nhập email">
+                                    <div class="text-center">
+                                        <button type="button" id="submit-form-footer" class="btn btn-send">Đăng ký</button>
                                     </div>
-                                @endif
-                                {!! csrf_field() !!}
-                                <input type="text" value="{{ old('name') }}" name="name" class="input-style-1 input-left" placeholder="Họ và tên">
-                                <input type="text" value="{{ old('phone') }}" min="10" max="11" name="phone" class="input-style-1 input-right" placeholder="Số điện thoại">
-                                <input type="text" value="{{ old('email') }}" name="email" class="input-style-2" placeholder="Nhập email">
-                                <div class="text-center">
-                                    <button class="btn btn-send">Đăng ký</button>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
+                            {{--<div class="status-footer" style="display: none;   color: green;">--}}
+                                {{--<span class="glyphicon glyphicon-heart"></span>Bạn đã đăng ký nhận tin thành công<span class="glyphicon glyphicon-heart"></span>--}}
+                            {{--</div>--}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div id="myModal-footer" class="modal fade" role="dialog"  data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Đăng ký nhận tư vấn miễn phí</h4>
+            </div>
+            <div class="modal-body">
+                <div class="status-footer" style="color: green;">
+                    <span class="glyphicon glyphicon-heart"></span>Bạn đã đăng ký nhận tin thành công<span class="glyphicon glyphicon-heart"></span>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -535,7 +548,89 @@
             return false;
         }
     }
-
     Popup();
+</script>
+<script>
+
+    $(document).ready(function () {
+        $("#submit-ajax-form").click(function () {
+            var email = $("#email-register").val();
+            var name = $("#name-register").val();
+            var phone = $("#phone-register").val();
+            var _token = $("#token").val();
+
+            $.ajax({
+                url: 'news/form',
+                type: 'post',
+                dataType: "json",
+                data: {
+                    "_token": _token,
+                    "name": name,
+                    "email": email,
+                    "phone": phone
+                },
+                success: function (data) {
+                    if (data.status) {
+                        $('.form-regis').hide();
+                        $('.status').show();
+                        setTimeout(function () {
+                            $('#myModal').modal('hide');
+                            Set_Cookie('cookie_popup', 'PopUnder', 0.1, '/', '', '');
+                        }, 3000);
+                    }
+                },
+                error: function (data) {
+                    var response = JSON.parse(data.responseText);
+                    $('#result-error').html('');
+
+                    $.each(response, function (key, value) {
+                        $('#result-error').append('<p style="color: red;">&bull; ' + value[0] + '</p>');
+                    });
+                }
+            });
+            return false;
+        });
+
+        //form 2 footer
+        $("#submit-form-footer").click(function () {
+            var email = $("#email-footer").val();
+            var name = $("#name-footer").val();
+            var phone = $("#phone-footer").val();
+            var _token = $("#token-footer").val();
+
+            $.ajax({
+                url: 'news/form',
+                type: 'post',
+                dataType: "json",
+                data: {
+                    "_token": _token,
+                    "name": name,
+                    "email": email,
+                    "phone": phone
+                },
+                success: function (data) {
+                    if (data.status) {
+                        $('#myModal-footer').modal('show', {backdrop: 'static', keyboard: false})
+                        setTimeout(function () {
+                            $('#myModal-footer').modal('hide');
+                            $('#email-footer').val('');
+                            $('#phone-footer').val('');
+                            $('#name-footer').val('');
+                            $(this).scrollTop(0);
+                        }, 3000);
+                    }
+                },
+                error: function (data) {
+                    var response = JSON.parse(data.responseText);
+                    $('#result-error-footer').html('');
+
+                    $.each(response, function (key, value) {
+                        $('#result-error-footer').append('<p style="color: red;">&bull; ' + value[0] + '</p>');
+                    });
+                }
+            });
+            return false;
+        });
+    });
 
 </script>
