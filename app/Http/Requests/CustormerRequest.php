@@ -24,10 +24,10 @@ class CustormerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
-//            'email' => 'required|unique:custormers|email',
-            'phone' => 'required|digits_between:10,11',
-            'address' => 'required',
+            'name'     => 'required|max:255',
+            'phone'    => 'required|digits_between:10,11',
+            'address'  => 'required',
+            'quantity' => 'required|numeric'
         ];
     }
 
@@ -36,11 +36,10 @@ class CustormerRequest extends FormRequest
         return [
             'name.required'         => 'Tên không được bỏ trống',
             'phone.required'        => 'Số điện thoại không được bỏ trống',
-//            'email.required'        => 'Chúng tôi cần biết địa chỉ email của bạn!',
-//            'email.unique'          => 'Email đã tồn tại ! Xin bạn chọn email khác!',
-//            'email.email'           => 'Email không đúng định dạng!',
-            'address.required'      => 'Địa thoại  không được bỏ trống',
+            'address.required'      => 'Địa chỉ không được bỏ trống',
             'phone.digits_between'  => 'Số điện thoại không đúng định dạng từ 10 hoặc 11 số',
+            'quantity.required'     => 'Số lượng không được bỏ trống',
+            'quantity.numeric'      => 'Số lượng không đúng định dạng'
         ];
     }
 

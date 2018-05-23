@@ -1,5 +1,5 @@
 <?php
-
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,8 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $user = new User();
+    $user = $user->find(1);
+    setlocale(LC_TIME, 'es_ES.utf8');
+    $date = Carbon\Carbon::parse($user->reverse_date)->formatLocalized('%B %d, %Y 00:00:00');
+    return view('welcome', ['date' => $date]);
 });
+
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('login', 'LoginController@getLogin');
@@ -28,7 +33,12 @@ Route::group(['prefix' => 'admin'], function () {
 //    list news
     Route::get('news', 'NewsController@index');
 
+    Route::get('news/edit/{id}', 'NewsController@edit');
+    Route::post('news/update/{id}', 'NewsController@update');
 
+    //settings
+    Route::get('setting/{id}', 'AdminController@setting');
+    Route::post('update/{id}', 'AdminController@update');
 });
 
  Auth::routes();
@@ -37,3 +47,6 @@ Route::get('/home', 'HomeController@index');
 Route::get('/admin', 'AdminController@index');
 Route::post('news/create', 'NewsController@create');
 Route::post('news/form', 'NewsController@form');
+
+ Route::post('custormer/create', 'CustormerController@create');
+

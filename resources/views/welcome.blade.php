@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('/shop/css/styles.css') }}">
     <script type="text/javascript" src="{{ URL::asset('/shop/assets/jquery/jquery-3.2.1.js') }}"></script>
 </head>
-
 <body>
 <div class="wrap-body">
     <!-- content -->
@@ -165,7 +164,7 @@
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th class="text-center" scope="col">Số hộp</th>
+                                            <th class="text-center" scope="col">Liệu trình</th>
                                             <th class="text-center" scope="col">Giá hiện tại</th>
                                             <th class="text-center" scope="col">Giá khuyến mại</th>
                                             <th class="text-center" scope="col">Tiết kiệm</th>
@@ -176,7 +175,7 @@
                                             <td class="text-center">30 ngày</td>
                                             <td class="text-right">320.000 VNĐ</td>
                                             <td class="text-right">280.000 VNĐ</td>
-                                            <td class="text-right">40.000 VNĐ</td>
+                                            <td class="text-right">40.000 VNĐ)</td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">60 ngày</td>
@@ -221,7 +220,7 @@
                                 </div>
                                 <div class="text-center">
                                     <button class="btn btn-advisory" type="button" data-toggle="modal"
-                                            data-target="#advisory">Tôi muốn nhận khuyến mãi
+                                            data-target="#advisory-infor">Tôi muốn nhận khuyến mãi
                                     </button>
                                 </div>
                             </div>
@@ -234,7 +233,7 @@
                 </div>
             </div>
             <!-- Modal -->
-            <div id="advisory" class="modal fade" role="dialog">
+            <div id="advisory-infor" class="modal fade" role="dialog">
                 <div class="modal-dialog">
 
                     <!-- Modal content-->
@@ -243,38 +242,47 @@
                             <h4 class="modal-title">Thông tin khách hàng</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Tên</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" placeholder="Họ và tên">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Số điện thoại</label>
-                                    <div class="col-sm-9">
-                                        <input type="number" class="form-control" placeholder="Số điện thoại">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Địa chỉ</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" placeholder="Địa chỉ">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Số lượng hộp</label>
-                                    <div class="col-sm-9">
-                                        <input type="number" class="form-control" placeholder="Số lượng hộp">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-default btn-info-user">Gửi thông tin
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                             <div class="form-advisory-infor">
+                                    <div id="result-error-footer-infor"></div>
+                                    <form class="form-horizontal">
+                                        <input type="hidden" id="token-infor" name="_token" value="{{ csrf_token() }}">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Tên <span style="color: red;">(*)</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="name"  class="name-infor form-control" placeholder="Họ và tên">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Số điện thoại <span style="color: red;">(*)</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="phone" class="phone-infor form-control" placeholder="Số điện thoại">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Địa chỉ <span style="color: red;">(*)</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="address" class="address-infor form-control" placeholder="Địa chỉ">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Số lượng hộp <span style="color: red;">(*)</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="number" name="quantity" class="quantity-infor form-control" placeholder="Số lượng hộp">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="text-center">
+                                                <button type="submit" id="button-promotion" class="btn btn-default btn-info-user">Gửi thông tin
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                             </div>
+                            <div class="status-infor" style="display:none; text-align: center; color: green;">
+                                       Bạn đã đăng ký thành công! <br/>
+                               Chuyên viên tư vấn của nhà thuốc sẽ liên hệ lại ngay với bạn <br/>
+                                  Cảm ơn!
+                            </div>
                         </div>
                     </div>
 
@@ -342,7 +350,7 @@
                         <div class="row">
                             <div class="col-md-3 col-sm-4">
                                 <div class="img">
-                                    <img class="avatar" src="{{ URL::asset('/shop/image/avatar1.jpg') }}" alt="">
+                                    <img class="avatar" src="{{ URL::asset('/shop/image/avatar2.jpg') }}" alt="">
                                 </div>
                             </div>
                             <div class="col-md-9 col-sm-8">
@@ -350,7 +358,7 @@
                                     <div class="col-md-9">
                                         <div class="content-comment">
                                             <div class="infor-user">
-                                                <div class="name">Chị Lê Thị Hoa</div>
+                                                <div class="name">Bác Trần Đình Xuân</div>
                                                 <div class="rate-star-mobile">
                                                     <div class="rate-star">
                                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -360,15 +368,10 @@
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
-                                                <div class="service-user">Nhân viên văn phòng, Minh Khai - HN</div>
+                                                <div class="service-user">Kiến An - Hải Phòng</div>
                                                 <div class="border-dotted"></div>
                                                 <div class="content">
-                                                    Tôi thường xuyên bị tê buồn ngón tay do công việc đánh máy
-                                                    thường xuyên và ít vận động đi lại. Sau khi sử dụng
-                                                    sản phẩm này chỉ cần chưa hết 10 ngày tôi không còn bị tê
-                                                    ngón tay nữa. Sau đó tôi sử dụng hết
-                                                    1 liệu trình thì 4 năm trở lại đây tôi không còn bị tê tay
-                                                    nữa.
+                                                    Bác chỉ ngâm thuốc có 1 tuần đã cảm thấy không còn bị đau nhức khớp ngón tay nữa. Mà trước khi dùng thuốc bác thường xuyên bị mất ngủ, nhưng bây giờ mỗi ngày ngâm xong bác ngủ ngon hơn!
                                                 </div>
                                             </div>
                                         </div>
@@ -400,7 +403,7 @@
                             <img class="img-responsive" src="{{ URL::asset('/shop/image/img-thuoc3.JPG') }}" alt="">
                         </div>
                         <div class="col-md-7 col-sm-7">
-                            <h2 class="title">ĐẶT HÀNG NGAY HÔM NAY ĐỂ MUA HÀNG VỚI GIÁ ƯU ĐÃI!</h2>
+                            <h2 class="title">ĐĂNG KÝ NGAY HÔM NAY ĐỂ NHẬN TƯ VẤN MIỄN PHÍ!</h2>
                             <div class="title-content hidden-xs">GIẢI QUYẾT VẤN ĐỀ CỦA BẠN</div>
                             <div class="content hidden-xs">Hãy chia sẻ với nhà thuốc để nhận được tư vấn từ
                                 chuyên gia!
@@ -411,20 +414,22 @@
                             </div>
                             <div class="title-contact">Liên hệ để nắm rõ thông tin tốt nhất</div>
                             <div class="form-regis-footer">
-                            <div id="result-error-footer"></div>
-                                <form  class="form-horizontal">
-                                    <input type="hidden" id="token-footer" name="_token" value="{{ csrf_token() }}">
-                                    <input type="text" value="{{ old('name') }}" id="name-footer" name="name" class="input-style-1 input-left" placeholder="Họ và tên">
-                                    <input type="text" value="{{ old('phone') }}" id="phone-footer" min="10" max="11" name="phone" class="input-style-1 input-right" placeholder="Số điện thoại">
-                                    <input type="text" value="{{ old('email') }}" id="email-footer" name="email" class="input-style-2" placeholder="Nhập email">
-                                    <div class="text-center">
-                                        <button type="button" id="submit-form-footer" class="btn btn-send">Đăng ký</button>
-                                    </div>
-                                </form>
+                                <div id="result-error-footer"></div>
+                                    <form  class="form-horizontal">
+                                        <input type="hidden" id="token-footer" name="_token" value="{{ csrf_token() }}">
+                                        <input type="text" value="{{ old('name') }}" id="name-footer" name="name" class="input-style-1 input-left" placeholder="Họ và tên">
+                                        <input type="text" value="{{ old('phone') }}" id="phone-footer" min="10" max="11" name="phone" class="input-style-1 input-right" placeholder="Số điện thoại">
+                                        <input type="text" value="{{ old('email') }}" id="email-footer" name="email" class="input-style-2" placeholder="Nhập email">
+                                        <div class="text-center">
+                                            <button type="button" id="submit-form-footer" class="btn btn-send">Đăng ký</button>
+                                        </div>
+                                    </form> 
                             </div>
-                            {{--<div class="status-footer" style="display: none;   color: green;">--}}
-                                {{--<span class="glyphicon glyphicon-heart"></span>Bạn đã đăng ký nhận tin thành công<span class="glyphicon glyphicon-heart"></span>--}}
-                            {{--</div>--}}
+                            <div class="status-footer" style="display: none; color: green;">
+                                        Bạn đã đăng ký thành công! <br/>
+                                        Chuyên viên tư vấn của nhà thuốc sẽ liên hệ lại ngay với bạn <br/>
+                                        Cảm ơn!
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -441,7 +446,9 @@
             </div>
             <div class="modal-body">
                 <div class="status-footer" style="color: green;">
-                    <span class="glyphicon glyphicon-heart"></span>Bạn đã đăng ký nhận tin thành công<span class="glyphicon glyphicon-heart"></span>
+                           Bạn đã đăng ký thành công! <br/>
+                            Chuyên viên tư vấn của nhà thuốc sẽ liên hệ lại ngay với bạn <br/>
+                            Cảm ơn!
                 </div>
             </div>
         </div>
@@ -454,6 +461,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Đăng ký nhận tư vấn miễn phí</h4>
             </div>
             <div class="modal-body">
@@ -462,21 +470,21 @@
                 <form class="form-horizontal">
                     <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Tên</label>
+                        <label class="col-sm-3 control-label">Tên <span style="color:red;">(*)</span></label>
                         <div class="col-sm-9">
                             <input type="text" id="name-register" value="{{ old('name') }}" name="name"
                                    class="form-control" placeholder="Họ và tên">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Số điện thoại</label>
+                        <label class="col-sm-3 control-label">Số điện thoại <span style="color:red;">(*)</span></label>
                         <div class="col-sm-9">
                             <input type="text" id="phone-register" value="{{ old('phone') }}" min="10" max="11"
                                    name="phone" class="form-control" placeholder="Số điện thoại">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Địa chỉ</label>
+                        <label class="col-sm-3 control-label">Email</label>
                         <div class="col-sm-9">
                             <input type="text" id="email-register" value="{{ old('email') }}" min="10" max="11"
                                    name="email" class="form-control" placeholder="Email">
@@ -491,7 +499,9 @@
                 </form>
                 </div>
                 <div class="status" style="display: none;   color: green;">
-                    <span class="glyphicon glyphicon-heart"></span>Bạn đã đăng ký nhận tin thành công<span class="glyphicon glyphicon-heart"></span>
+                           Bạn đã đăng ký thành công! <br/>
+                            Chuyên viên tư vấn của nhà thuốc sẽ liên hệ lại ngay với bạn <br/>
+                            Cảm ơn!
                 </div>
             </div>
         </div>
@@ -499,7 +509,7 @@
     </div>
 </div>
 <script type="text/javascript" src="{{ URL::asset('/shop/assets/bootstrap/js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('/shop/js/main.js') }}"></script>
+<!-- <script type="text/javascript" src="{{ URL::asset('/shop/js/main.js') }}"></script> -->
 </body>
 
 </html>
@@ -631,6 +641,92 @@
             });
             return false;
         });
+
+        //click button tôi muốn nhận khuyến mại
+   
+        $(".close").click(function () {
+            Set_Cookie('cookie_popup', 'PopUnder', 0.1, '/', '', '');
+        });
+         $("#button-promotion").click(function () {
+            var name = $(".name-infor").val();
+            var phone = $(".phone-infor").val();
+            var address = $(".address-infor").val();
+            var quantity = $(".quantity-infor").val();
+            var _token = $("#token-infor").val();
+
+            $.ajax({
+                url: 'custormer/create',
+                type: 'post',
+                dataType: "json",
+                data: {
+                    "_token": _token,
+                    "name": name,
+                    "address": address,
+                    "phone": phone,
+                    'quantity': quantity
+                },
+                success: function (data) {
+                    if (data.status) {
+                        $('.form-advisory-infor').hide();
+                        $('.status-infor').show();
+                        setTimeout(function () {
+                            $('#advisory-infor').hide();
+                            $(this).scrollTop(0);
+                        }, 3000);
+                    }
+                },
+                error: function (data) {
+                    var response = JSON.parse(data.responseText);
+                    $('#result-error-footer-infor').html('');
+
+                    $.each(response, function (key, value) {
+                        $('#result-error-footer-infor').append('<p style="color: red;">&bull; ' + value[0] + '</p>');
+                    });
+                }
+            });
+            return false;
+        });
     });
 
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    var date_time = "{{ $date }}";
+    // Set the date we're counting down to
+    var countDownDate = new Date(date_time).getTime();
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get todays date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now an the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="countdown"
+        document.getElementById("days").innerHTML = days;
+        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+
+        // If the count down is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+});
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+  
 </script>

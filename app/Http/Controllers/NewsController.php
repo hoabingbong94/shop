@@ -65,4 +65,27 @@ class NewsController extends Controller
             return response()->json(['status' => false, 'data' => $request]);
         }
     }
+
+    public function edit($id) {
+        $new = new News();
+        $new = $new->find($id);
+        if (empty($new)) {
+            return redirect('/admin/new');
+        }
+
+        return view("admin.news.edit", ["new" => $new]);
+    }
+
+    public function update($id)
+    {
+        $new = new News();
+        $new = $new->find($id);
+        if (empty($new)) {
+            return redirect('/admin/news');
+        }
+        $new->status = request()->input('status');
+        if ($new->save()) {
+            return redirect('/admin/news');
+        }
+    }
 }

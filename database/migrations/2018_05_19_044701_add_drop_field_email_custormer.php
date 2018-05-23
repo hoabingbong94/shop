@@ -14,9 +14,9 @@ class AddDropFieldEmailCustormer extends Migration
     public function up()
     {
         //
-        Schema::table('custormers', function($table) {
-            $table->dropColumn('email');
-        });
+        // Schema::table('custormers', function($table) {
+        //     $table->dropColumn('email');
+        // });
     }
 
     /**
@@ -26,8 +26,8 @@ class AddDropFieldEmailCustormer extends Migration
      */
     public function down()
     {
-        Schema::table('custormers', function($table) {
-            $table->dropColumn('email');
-        });
+        // Schema::table('custormers', function($table) {
+        //     $table->dropColumn('email');
+        // });
     }
 }

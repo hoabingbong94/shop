@@ -14,6 +14,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/lib/jqvmap/jqvmap.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('assets/css/style.css') }}" type="text/css"/>
@@ -28,6 +29,9 @@
               <li class="dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle">
                 <img src="{{ URL::asset('assets/img/avatar.png') }}" alt="Avatar"><span class="user-name">Admin</span></a>
                 <ul role="menu" class="dropdown-menu">
+
+                  <li><a href="{{ url('/admin/setting/' . Auth::id()) }}" ><span class="icon mdi mdi-settings"></span> Settings</a></li>
+
                     @if (Auth::guest())
                     @else
                         <li><a href="{{ url('/logout') }}" onclick="event.preventDefault();
@@ -49,7 +53,8 @@
               <div class="left-sidebar-content">
                 <ul class="sidebar-elements">
                   <li class="divider">Menu Quản lý</li>
-                  <li class="active"><a href="/admin/custormer"><i class="icon mdi mdi-border-all"></i><span>Quản lý khách hàng</span></a></li>
+                  <li><a href="/admin/custormer"><i class="icon mdi mdi-border-all"></i><span>Quản lý khách hàng</span></a></li>
+                  <li><a href="/admin/news"><i class="icon mdi mdi-border-all"></i><span>Khách hàng cần tư vấn</span></a></li>
                 </ul>
               </div>
             </div>
@@ -72,9 +77,13 @@
     <script src="{{ URL::asset('assets/lib/jquery-flot/plugins/jquery.flot.orderBars.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('assets/lib/jquery-flot/plugins/curvedLines.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('assets/lib/jquery.sparkline/jquery.sparkline.min.js') }}" type="text/javascript"></script>
+   <script src="{{ URL::asset('assets/lib/moment.js/min/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::asset('assets/lib/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('assets/lib/countup/countUp.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('assets/lib/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('assets/lib/jqvmap/jquery.vmap.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('assets/lib/jqvmap/maps/jquery.vmap.world.js') }}" type="text/javascript"></script>
+     <script src="{{ URL::asset('assets/js/customer.js') }}" type="text/javascript"></script>
+  
   </body>
 </html>
